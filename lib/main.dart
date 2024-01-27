@@ -87,6 +87,16 @@ class _CalculatorState extends State<Calculator> {
 
   void addNumber(String input) {
     setState(() {
+      // Handle operation first input
+      if ((input == addSign ||
+              input == subtractSign ||
+              input == multiplySign ||
+              input == divideSign) &&
+          _numbers == "0") {
+        _numbers = "0";
+        return;
+      }
+
       if (_numbers == "0" || _numbers == "Error") {
         // Replace 0 with new number
         _numbers = input;
@@ -118,23 +128,16 @@ class _CalculatorState extends State<Calculator> {
 
   void backspace() {
     setState(() {
-      _numbers = _numbers.substring(0, _numbers.length - 1);
+      if (_numbers.length - 1 == 0) {
+        _numbers = "0";
+      } else
+        _numbers = _numbers.substring(0, _numbers.length - 1);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              "MY CALCULATOR",
-            ),
-          ),
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
